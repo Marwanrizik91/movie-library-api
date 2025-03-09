@@ -9,10 +9,10 @@ export interface Movie {
   popularity: number;
   poster_path: string;
   release_date: string;
-  title: number;
-  video: number;
-  vote_average: string;
-  vote_count: string;
+  title: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
 }
 
 export interface MoviesResponse {
