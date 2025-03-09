@@ -23,4 +23,12 @@ export class MoviesService {
       .get(`${this.baseUrl}/discover/movie?api_key=${this.apiKey}&page=${page}`)
       .pipe(map((response: AxiosResponse<MoviesResponse>) => response.data));
   }
+
+  searchMovies(query: string, page: number = 1): Observable<MoviesResponse> {
+    return this.httpService
+      .get(
+        `${this.baseUrl}/search/movie?api_key=${this.apiKey}&query=${query}&page=${page}`,
+      )
+      .pipe(map((response: AxiosResponse<MoviesResponse>) => response.data));
+  }
 }
