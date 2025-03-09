@@ -1,12 +1,12 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from './movies.service';
+import { Controller, Get, Query } from '@nestjs/common';
+import { MoviesService } from './movies.service';
 
 @Controller('movies')
-export class AppController {
-  constructor(private readonly appService: AppService) {}
+export class MoviesController {
+  constructor(private readonly moviesService: MoviesService) {}
 
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  getMovies(@Query('page') page: number = 1) {
+    return this.moviesService.getMovies(page);
   }
 }
