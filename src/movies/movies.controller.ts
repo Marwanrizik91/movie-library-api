@@ -19,4 +19,12 @@ export class MoviesController {
   getGenres() {
     return this.moviesService.getGenres();
   }
+
+  @Get('genre')
+  GetMoviesByGenreId(
+    @Query('genreId') genreId: number,
+    @Query('page') page: number = 1,
+  ) {
+    return this.moviesService.getMoviesByGenre(genreId, page);
+  }
 }

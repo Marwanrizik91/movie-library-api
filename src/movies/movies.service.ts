@@ -37,4 +37,15 @@ export class MoviesService {
       .get(`${this.baseUrl}/genre/movie/list?api_key=${this.apiKey}`)
       .pipe(map((response: AxiosResponse<GenresResponse>) => response.data));
   }
+
+  getMoviesByGenre(
+    genreId: number,
+    page: number = 1,
+  ): Observable<MoviesResponse> {
+    return this.httpService
+      .get(
+        `${this.baseUrl}/discover/movie?api_key=${this.apiKey}&with_genres=${genreId}&page=${page}`,
+      )
+      .pipe(map((response: AxiosResponse<MoviesResponse>) => response.data));
+  }
 }
