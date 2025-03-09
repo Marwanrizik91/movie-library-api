@@ -3,7 +3,12 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { GenresResponse, MoviesResponse } from './movies.interfaces';
+import {
+  GenresResponse,
+  PaginatedResponse,
+  Movie,
+  Genre,
+} from './movies.interfaces';
 
 @Injectable()
 export class MoviesService {
@@ -35,37 +40,41 @@ export class MoviesService {
     return `${this.baseUrl}${endpoint}?${queryParams.toString()}`;
   }
 
-  getMovies(page: number = 1): Observable<MoviesResponse> {
+  getMovies(page: number = 1): Observable<PaginatedResponse<Movie>> {
     const url = this.buildUrl('/discover/movie', { page });
     return this.httpService
-      .get<MoviesResponse>(url)
+      .get<PaginatedResponse<Movie>>(url)
       .pipe(map((response) => response.data));
   }
 
-  searchMovies(query: string, page: number = 1): Observable<MoviesResponse> {
+  searchMovies(
+    query: string,
+    page: number = 1,
+  ): Observable<PaginatedResponse<Movie>> {
     const url = this.buildUrl(`/search/movie`, { query, page });
     return this.httpService
-      .get<MoviesResponse>(url)
+      .get<PaginatedResponse<Movie>>(url)
       .pipe(map((response) => response.data));
   }
 
-  getGenres(): Observable<GenresResponse> {
+  getGenres(): Observable<Genre[]> {
     const url = this.buildUrl(`/genre/movie/list`);
     return this.httpService
       .get<GenresResponse>(url)
-      .pipe(map((response) => response.data));
+      .pipe(map((response) => response.data))
+      .pipe(map((data) => data.genres));
   }
 
   getMoviesByGenre(
     genreId: number,
     page: number = 1,
-  ): Observable<MoviesResponse> {
+  ): Observable<PaginatedResponse<Movie>> {
     const url = this.buildUrl(`/discover/movie`, {
       with_genres: genreId,
       page,
     });
     return this.httpService
-      .get<MoviesResponse>(url)
+      .get<PaginatedResponse<Movie>>(url)
       .pipe(map((response) => response.data));
   }
 }

@@ -15,9 +15,9 @@ export interface Movie {
   vote_count: number;
 }
 
-export interface MoviesResponse {
+export interface PaginatedResponse<T> {
   page: number;
-  results: Movie[];
+  results: T[];
   total_pages: number;
   total_results: number;
 }
