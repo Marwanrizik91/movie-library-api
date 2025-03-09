@@ -10,8 +10,13 @@ export class MoviesController {
     return this.moviesService.getMovies(page);
   }
 
-  @Get()
+  @Get('search')
   searchMovies(@Query('query') query: string, @Query('page') page: number = 1) {
     return this.moviesService.searchMovies(query, page);
+  }
+
+  @Get('genres')
+  getGenres() {
+    return this.moviesService.getGenres();
   }
 }

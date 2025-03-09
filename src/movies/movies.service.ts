@@ -4,7 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { AxiosResponse } from 'axios';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { MoviesResponse } from './movies.interfaces';
+import { GenresResponse, MoviesResponse } from './movies.interfaces';
 
 @Injectable()
 export class MoviesService {
@@ -30,5 +30,11 @@ export class MoviesService {
         `${this.baseUrl}/search/movie?api_key=${this.apiKey}&query=${query}&page=${page}`,
       )
       .pipe(map((response: AxiosResponse<MoviesResponse>) => response.data));
+  }
+
+  getGenres(): Observable<GenresResponse> {
+    return this.httpService
+      .get(`${this.baseUrl}/genre/movie/list?api_key=${this.apiKey}`)
+      .pipe(map((response: AxiosResponse<GenresResponse>) => response.data));
   }
 }
