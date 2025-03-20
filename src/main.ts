@@ -3,7 +3,7 @@ import { MoviesModule } from './movies/movies.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(MoviesModule);
-  app.setGlobalPrefix('api'); // Add the 'api' prefix
+  app.setGlobalPrefix('api');
   app.enableCors({
     origin: '*',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
